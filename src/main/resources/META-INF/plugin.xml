@@ -1,0 +1,66 @@
+<idea-plugin>
+    <id>com.maximpietukhov.brightscript-syntax</id>
+    <name>BrightScript Syntax</name>
+    <vendor email="master.l.shake@gmail.com" url="https://github.com/MASTER-SHAKE">Maxim Pietukhov</vendor>
+
+    <description><![CDATA[
+    BrightScript syntax highlighting support for WebStorm and other JetBrains IDEs.
+
+    <h3>Features:</h3>
+    <ul>
+        <li>Syntax highlighting for BrightScript (.brs) files</li>
+        <li>Keywords, operators, and literals recognition</li>
+        <li>Comments and string highlighting</li>
+        <li>Support for BrightScript language constructs</li>
+        <li>Customizable color scheme</li>
+    </ul>
+
+    <h3>About BrightScript:</h3>
+    <p>BrightScript is a scripting language used for developing applications on Roku streaming devices.
+    It is a BASIC-like language with object-oriented programming features.</p>
+    ]]></description>
+
+    <change-notes><![CDATA[
+    <h3>1.0.0</h3>
+    <ul>
+        <li>Initial release</li>
+        <li>Basic syntax highlighting for BrightScript</li>
+        <li>Support for .brs file extension</li>
+        <li>Keyword highlighting</li>
+        <li>String and number literals support</li>
+        <li>Comment highlighting</li>
+        <li>Code folding support</li>
+    </ul>
+    ]]></change-notes>
+
+    <!-- Product and plugin compatibility requirements -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- File type -->
+        <fileType
+                name="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptFileType"
+                fieldName="INSTANCE"
+                language="BrightScript"
+                extensions="brs"/>
+
+        <!-- Language -->
+        <lang.parserDefinition
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptParserDefinition"/>
+
+        <lang.syntaxHighlighterFactory
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptSyntaxHighlighterFactory"/>
+
+        <!-- Color settings -->
+        <colorSettingsPage
+                implementation="com.maximpietukhov.brightscript.BrightScriptColorSettingsPage"/>
+
+        <!-- Code folding -->
+        <lang.foldingBuilder
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptFoldingBuilder"/>
+    </extensions>
+</idea-plugin>
