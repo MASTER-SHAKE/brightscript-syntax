@@ -13,6 +13,7 @@ class BrightScriptColorSettingsPage : ColorSettingsPage {
             AttributesDescriptor("Keyword", BrightScriptSyntaxHighlighter.KEYWORD),
             AttributesDescriptor("Type Keyword", BrightScriptSyntaxHighlighter.TYPE_KEYWORD),
             AttributesDescriptor("Built-in Function", BrightScriptSyntaxHighlighter.BUILTIN_FUNCTION),
+            AttributesDescriptor("Function/Class Declaration", BrightScriptSyntaxHighlighter.FUNCTION_DECLARATION),
             AttributesDescriptor("String", BrightScriptSyntaxHighlighter.STRING),
             AttributesDescriptor("Number", BrightScriptSyntaxHighlighter.NUMBER),
             AttributesDescriptor("Comment", BrightScriptSyntaxHighlighter.COMMENT),

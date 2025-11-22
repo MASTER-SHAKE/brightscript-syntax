@@ -172,6 +172,7 @@ class BrightScriptLexer : LexerBase() {
                     TYPE_KEYWORDS.contains(lowerText) -> BrightScriptTokenTypes.TYPE_KEYWORD
                     CONSTANTS.contains(lowerText) -> BrightScriptTokenTypes.BOOLEAN_LITERAL
                     BUILTIN_FUNCTIONS.contains(lowerText) -> BrightScriptTokenTypes.BUILTIN_FUNCTION
+                    isPrecededByDeclarationKeyword() -> BrightScriptTokenTypes.FUNCTION_DECLARATION
                     else -> BrightScriptTokenTypes.IDENTIFIER
                 }
             }
@@ -267,4 +268,30 @@ class BrightScriptLexer : LexerBase() {
     override fun getBufferSequence(): CharSequence = buffer!!
 
     override fun getBufferEnd(): Int = endOffset
+
+    /**
+     * Look back in the buffer to check if the previous word was function/sub/class
+     */
+    private fun isPrecededByDeclarationKeyword(): Boolean {
+        var pos = tokenStart - 1
+
+        // Skip whitespace backwards
+        while (pos >= startOffset && buffer!![pos].isWhitespace()) {
+            pos--
+        }
+
+        if (pos < startOffset) return false
+
+        // Find the start of the previous word
+        val wordEnd = pos + 1
+        while (pos >= startOffset && (buffer!![pos].isLetterOrDigit() || buffer!![pos] == '_')) {
+            pos--
+        }
+        val wordStart = pos + 1
+
+        if (wordStart >= wordEnd) return false
+
+        val prevWord = buffer!!.subSequence(wordStart, wordEnd).toString().lowercase()
+        return prevWord in listOf("function", "sub", "class")
+    }
 }

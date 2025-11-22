@@ -21,6 +21,14 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h3>1.2.2</h3>
+    <ul>
+        <li>REM comment highlighting — REM comments now highlighted in yellow</li>
+        <li>Double-apostrophe comments — '' comments also highlighted in yellow for special/doc comments</li>
+        <li>Function/class declaration highlighting — Names after function, sub, and class keywords are now highlighted distinctly</li>
+        <li>Added "REM Comment" and "Function/Class Declaration" to Color Settings page</li>
+    </ul>
+
     <h3>1.2.1</h3>
     <ul>
         <li>Initial release</li>

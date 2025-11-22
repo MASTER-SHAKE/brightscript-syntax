@@ -20,6 +20,7 @@ object BrightScriptTokenTypes {
     // Identifiers
     @JvmField val IDENTIFIER = BrightScriptTokenType("IDENTIFIER")
     @JvmField val BUILTIN_FUNCTION = BrightScriptTokenType("BUILTIN_FUNCTION")
+    @JvmField val FUNCTION_DECLARATION = BrightScriptTokenType("FUNCTION_DECLARATION")
 
     // Operators
     @JvmField val OPERATOR = BrightScriptTokenType("OPERATOR")
@@ -27,7 +28,6 @@ object BrightScriptTokenTypes {
     // Comments
     @JvmField val LINE_COMMENT = BrightScriptTokenType("LINE_COMMENT")
     @JvmField val REM_COMMENT = BrightScriptTokenType("REM_COMMENT")
-    @JvmField val COMMENT = BrightScriptTokenType("COMMENT")
 
     // Brackets
     @JvmField val LPAREN = BrightScriptTokenType("LPAREN")
@@ -44,7 +44,7 @@ object BrightScriptTokenTypes {
     @JvmField val BAD_CHARACTER = BrightScriptTokenType("BAD_CHARACTER")
 
     @JvmField
-    val COMMENTS = TokenSet.create(LINE_COMMENT, REM_COMMENT, COMMENT)
+    val COMMENTS = TokenSet.create(LINE_COMMENT, REM_COMMENT)
 
     @JvmField
     val STRINGS = TokenSet.create(STRING_LITERAL)
