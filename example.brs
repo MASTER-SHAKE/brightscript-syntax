@@ -11,11 +11,11 @@ function main() as void
       end if
     end if
 
-    ' Variables
+    '' Variables
     name = "John Doe"
     age = 30
     isActive = true
-    balance = 100.50
+    balance = 100.50'
 
     ' Arrays
     numbers = [1, 2, 3, 4, 5]

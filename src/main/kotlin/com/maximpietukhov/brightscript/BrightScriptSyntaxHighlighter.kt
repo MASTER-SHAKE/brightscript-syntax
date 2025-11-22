@@ -28,6 +28,11 @@ class BrightScriptSyntaxHighlighter : SyntaxHighlighterBase() {
             DefaultLanguageHighlighterColors.LINE_COMMENT
         )
 
+        val REM_COMMENT = TextAttributesKey.createTextAttributesKey(
+            "BRIGHTSCRIPT_REM_COMMENT",
+            DefaultLanguageHighlighterColors.METADATA
+        )
+
         val OPERATOR = TextAttributesKey.createTextAttributesKey(
             "BRIGHTSCRIPT_OPERATOR",
             DefaultLanguageHighlighterColors.OPERATION_SIGN
@@ -78,6 +83,7 @@ class BrightScriptSyntaxHighlighter : SyntaxHighlighterBase() {
         private val STRING_KEYS = arrayOf(STRING)
         private val NUMBER_KEYS = arrayOf(NUMBER)
         private val COMMENT_KEYS = arrayOf(COMMENT)
+        private val REM_COMMENT_KEYS = arrayOf(REM_COMMENT)
         private val OPERATOR_KEYS = arrayOf(OPERATOR)
         private val IDENTIFIER_KEYS = arrayOf(IDENTIFIER)
         private val PARENTHESES_KEYS = arrayOf(PARENTHESES)
@@ -99,6 +105,7 @@ class BrightScriptSyntaxHighlighter : SyntaxHighlighterBase() {
             BrightScriptTokenTypes.NUMBER_LITERAL -> NUMBER_KEYS
             BrightScriptTokenTypes.BOOLEAN_LITERAL -> NUMBER_KEYS
             BrightScriptTokenTypes.LINE_COMMENT, BrightScriptTokenTypes.COMMENT -> COMMENT_KEYS
+            BrightScriptTokenTypes.REM_COMMENT -> REM_COMMENT_KEYS
             BrightScriptTokenTypes.OPERATOR -> OPERATOR_KEYS
             BrightScriptTokenTypes.IDENTIFIER -> IDENTIFIER_KEYS
             BrightScriptTokenTypes.LPAREN, BrightScriptTokenTypes.RPAREN -> PARENTHESES_KEYS

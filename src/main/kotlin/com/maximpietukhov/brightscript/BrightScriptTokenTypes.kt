@@ -26,6 +26,7 @@ object BrightScriptTokenTypes {
 
     // Comments
     @JvmField val LINE_COMMENT = BrightScriptTokenType("LINE_COMMENT")
+    @JvmField val REM_COMMENT = BrightScriptTokenType("REM_COMMENT")
     @JvmField val COMMENT = BrightScriptTokenType("COMMENT")
 
     // Brackets
@@ -43,7 +44,7 @@ object BrightScriptTokenTypes {
     @JvmField val BAD_CHARACTER = BrightScriptTokenType("BAD_CHARACTER")
 
     @JvmField
-    val COMMENTS = TokenSet.create(LINE_COMMENT, COMMENT)
+    val COMMENTS = TokenSet.create(LINE_COMMENT, REM_COMMENT, COMMENT)
 
     @JvmField
     val STRINGS = TokenSet.create(STRING_LITERAL)

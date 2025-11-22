@@ -16,6 +16,7 @@ class BrightScriptColorSettingsPage : ColorSettingsPage {
             AttributesDescriptor("String", BrightScriptSyntaxHighlighter.STRING),
             AttributesDescriptor("Number", BrightScriptSyntaxHighlighter.NUMBER),
             AttributesDescriptor("Comment", BrightScriptSyntaxHighlighter.COMMENT),
+            AttributesDescriptor("REM Comment", BrightScriptSyntaxHighlighter.REM_COMMENT),
             AttributesDescriptor("Operator", BrightScriptSyntaxHighlighter.OPERATOR),
             AttributesDescriptor("Identifier", BrightScriptSyntaxHighlighter.IDENTIFIER),
             AttributesDescriptor("Parentheses", BrightScriptSyntaxHighlighter.PARENTHESES),
@@ -26,7 +27,9 @@ class BrightScriptColorSettingsPage : ColorSettingsPage {
         )
 
         private const val DEMO_TEXT = """
-' BrightScript Example
+' Regular comment (gray)
+'' Special comment (yellow)
+REM This is a REM comment (yellow)
 function main() as void
     ' Built-in functions
     print "Hello, World!"

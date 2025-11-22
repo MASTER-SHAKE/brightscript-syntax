@@ -94,15 +94,32 @@ class BrightScriptLexer : LexerBase() {
         val char = buffer!![currentOffset]
 
         when {
-            char == '\'' || (char == 'R' && currentOffset + 2 < endOffset &&
-                buffer!![currentOffset + 1] == 'E' && buffer!![currentOffset + 2] == 'M' &&
-                (currentOffset + 3 >= endOffset || !buffer!![currentOffset + 3].isLetterOrDigit())) -> {
-                // Comment
+            char == '\'' && currentOffset + 1 < endOffset && buffer!![currentOffset + 1] == '\'' -> {
+                // Double-quote comment '' (yellow)
+                while (currentOffset < endOffset && buffer!![currentOffset] != '\n') {
+                    currentOffset++
+                }
+                tokenEnd = currentOffset
+                tokenType = BrightScriptTokenTypes.REM_COMMENT
+            }
+            char == '\'' -> {
+                // Single-quote comment ' (gray)
                 while (currentOffset < endOffset && buffer!![currentOffset] != '\n') {
                     currentOffset++
                 }
                 tokenEnd = currentOffset
                 tokenType = BrightScriptTokenTypes.LINE_COMMENT
+            }
+            (char == 'R' || char == 'r') && currentOffset + 2 < endOffset &&
+                buffer!![currentOffset + 1].lowercaseChar() == 'e' &&
+                buffer!![currentOffset + 2].lowercaseChar() == 'm' &&
+                (currentOffset + 3 >= endOffset || !buffer!![currentOffset + 3].isLetterOrDigit()) -> {
+                // REM comment (yellow)
+                while (currentOffset < endOffset && buffer!![currentOffset] != '\n') {
+                    currentOffset++
+                }
+                tokenEnd = currentOffset
+                tokenType = BrightScriptTokenTypes.REM_COMMENT
             }
             char == '"' -> {
                 // String literal
