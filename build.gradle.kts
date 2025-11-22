@@ -48,11 +48,22 @@ tasks {
         """.trimIndent())
 
         changeNotes.set("""
-            <h3>1.0.0</h3>
+            <h3>1.2.2</h3>
+            <ul>
+                <li>REM comment highlighting - REM comments now highlighted in yellow</li>
+                <li>Double-apostrophe comments - '' comments also highlighted in yellow for special/doc comments</li>
+                <li>Function/class declaration highlighting - Names after function, sub, and class keywords are now highlighted distinctly</li>
+                <li>Added "REM Comment" and "Function/Class Declaration" to Color Settings page</li>
+            </ul>
+            <h3>1.2.1</h3>
             <ul>
                 <li>Initial release</li>
                 <li>Basic syntax highlighting for BrightScript</li>
                 <li>Support for .brs file extension</li>
+                <li>Keyword highlighting</li>
+                <li>String and number literals support</li>
+                <li>Comment highlighting</li>
+                <li>Code folding support</li>
             </ul>
         """.trimIndent())
     }
