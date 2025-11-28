@@ -173,6 +173,7 @@ class BrightScriptLexer : LexerBase() {
                     CONSTANTS.contains(lowerText) -> BrightScriptTokenTypes.BOOLEAN_LITERAL
                     BUILTIN_FUNCTIONS.contains(lowerText) -> BrightScriptTokenTypes.BUILTIN_FUNCTION
                     isPrecededByDeclarationKeyword() -> BrightScriptTokenTypes.FUNCTION_DECLARATION
+                    isFollowedByOpenParen() -> BrightScriptTokenTypes.FUNCTION_CALL
                     else -> BrightScriptTokenTypes.IDENTIFIER
                 }
             }
@@ -293,5 +294,20 @@ class BrightScriptLexer : LexerBase() {
 
         val prevWord = buffer!!.subSequence(wordStart, wordEnd).toString().lowercase()
         return prevWord in listOf("function", "sub", "class")
+    }
+
+    /**
+     * Look ahead to check if the identifier is followed by '(' (function call)
+     */
+    private fun isFollowedByOpenParen(): Boolean {
+        var pos = tokenEnd
+
+        // Skip whitespace forward
+        while (pos < endOffset && buffer!![pos].isWhitespace() && buffer!![pos] != '\n') {
+            pos++
+        }
+
+        // Check if next non-whitespace char is '('
+        return pos < endOffset && buffer!![pos] == '('
     }
 }

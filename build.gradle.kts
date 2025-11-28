@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.maximpietukhov"
-version = "1.2.2"
+version = "1.2.3"
 
 repositories {
     mavenCentral()
@@ -48,6 +48,11 @@ tasks {
         """.trimIndent())
 
         changeNotes.set("""
+            <h3>1.2.3</h3>
+            <ul>
+                <li>Function call highlighting</li>
+                <li>Added "Function Call" to Color Settings page</li>
+            </ul>
             <h3>1.2.2</h3>
             <ul>
                 <li>REM comment highlighting - REM comments now highlighted in yellow</li>

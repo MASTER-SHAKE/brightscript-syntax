@@ -83,6 +83,11 @@ class BrightScriptSyntaxHighlighter : SyntaxHighlighterBase() {
             DefaultLanguageHighlighterColors.FUNCTION_DECLARATION
         )
 
+        val FUNCTION_CALL = TextAttributesKey.createTextAttributesKey(
+            "BRIGHTSCRIPT_FUNCTION_CALL",
+            DefaultLanguageHighlighterColors.STATIC_METHOD
+        )
+
         private val KEYWORD_KEYS = arrayOf(KEYWORD)
         private val TYPE_KEYWORD_KEYS = arrayOf(TYPE_KEYWORD)
         private val STRING_KEYS = arrayOf(STRING)
@@ -98,6 +103,7 @@ class BrightScriptSyntaxHighlighter : SyntaxHighlighterBase() {
         private val COMMA_KEYS = arrayOf(COMMA)
         private val BUILTIN_FUNCTION_KEYS = arrayOf(BUILTIN_FUNCTION)
         private val FUNCTION_DECLARATION_KEYS = arrayOf(FUNCTION_DECLARATION)
+        private val FUNCTION_CALL_KEYS = arrayOf(FUNCTION_CALL)
         private val EMPTY_KEYS = emptyArray<TextAttributesKey>()
     }
 
@@ -121,6 +127,7 @@ class BrightScriptSyntaxHighlighter : SyntaxHighlighterBase() {
             BrightScriptTokenTypes.COMMA -> COMMA_KEYS
             BrightScriptTokenTypes.BUILTIN_FUNCTION -> BUILTIN_FUNCTION_KEYS
             BrightScriptTokenTypes.FUNCTION_DECLARATION -> FUNCTION_DECLARATION_KEYS
+            BrightScriptTokenTypes.FUNCTION_CALL -> FUNCTION_CALL_KEYS
             else -> EMPTY_KEYS
         }
     }

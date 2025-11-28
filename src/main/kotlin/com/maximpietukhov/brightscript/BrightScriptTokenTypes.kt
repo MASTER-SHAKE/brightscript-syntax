@@ -21,6 +21,7 @@ object BrightScriptTokenTypes {
     @JvmField val IDENTIFIER = BrightScriptTokenType("IDENTIFIER")
     @JvmField val BUILTIN_FUNCTION = BrightScriptTokenType("BUILTIN_FUNCTION")
     @JvmField val FUNCTION_DECLARATION = BrightScriptTokenType("FUNCTION_DECLARATION")
+    @JvmField val FUNCTION_CALL = BrightScriptTokenType("FUNCTION_CALL")
 
     // Operators
     @JvmField val OPERATOR = BrightScriptTokenType("OPERATOR")

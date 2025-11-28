@@ -14,6 +14,7 @@ class BrightScriptColorSettingsPage : ColorSettingsPage {
             AttributesDescriptor("Type Keyword", BrightScriptSyntaxHighlighter.TYPE_KEYWORD),
             AttributesDescriptor("Built-in Function", BrightScriptSyntaxHighlighter.BUILTIN_FUNCTION),
             AttributesDescriptor("Function/Class Declaration", BrightScriptSyntaxHighlighter.FUNCTION_DECLARATION),
+            AttributesDescriptor("Function Call", BrightScriptSyntaxHighlighter.FUNCTION_CALL),
             AttributesDescriptor("String", BrightScriptSyntaxHighlighter.STRING),
             AttributesDescriptor("Number", BrightScriptSyntaxHighlighter.NUMBER),
             AttributesDescriptor("Comment", BrightScriptSyntaxHighlighter.COMMENT),
@@ -72,6 +73,10 @@ function main() as void
     ' Math functions
     result = Abs(-10)
     sine = Sin(3.14)
+
+    ' Function call
+    updateDisplay()
+    processData(result)
 
     if count% > 10 then
         print "Count is greater than 10"
