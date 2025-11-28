@@ -51,7 +51,7 @@ tasks {
             <h3>1.2.3</h3>
             <ul>
                 <li>Function call highlighting</li>
-                <li>Added "Function Call" to Color Settings page</li>
+                <li>Go to Declaration - Ctrl+Click on function calls to navigate to definition</li>
             </ul>
             <h3>1.2.2</h3>
             <ul>

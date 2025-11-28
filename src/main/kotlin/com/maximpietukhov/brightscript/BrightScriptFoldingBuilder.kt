@@ -6,34 +6,32 @@ import com.intellij.lang.folding.FoldingDescriptor
 import com.intellij.openapi.editor.Document
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
+import com.maximpietukhov.brightscript.psi.BrightScriptFunctionDefinition
 
 class BrightScriptFoldingBuilder : FoldingBuilderEx() {
 
     override fun buildFoldRegions(root: PsiElement, document: Document, quick: Boolean): Array<FoldingDescriptor> {
         val descriptors = mutableListOf<FoldingDescriptor>()
 
-        // Find all block elements in the PSI tree
-        PsiTreeUtil.findChildrenOfAnyType(
-            root,
-            BrightScriptPsiElement::class.java
-        ).forEach { element ->
+        // Find function/sub blocks (BrightScriptFunctionDefinition)
+        PsiTreeUtil.findChildrenOfType(root, BrightScriptFunctionDefinition::class.java).forEach { element ->
+            val range = element.textRange
+            if (range.length > 0 && isMultiLine(element, document)) {
+                descriptors.add(FoldingDescriptor(element.node, range))
+            }
+        }
+
+        // Find other block elements (BrightScriptPsiElement)
+        PsiTreeUtil.findChildrenOfType(root, BrightScriptPsiElement::class.java).forEach { element ->
             val elementType = element.node.elementType
 
             when (elementType) {
-                BrightScriptElementTypes.FUNCTION_BLOCK,
-                BrightScriptElementTypes.SUB_BLOCK,
                 BrightScriptElementTypes.FOR_BLOCK,
                 BrightScriptElementTypes.WHILE_BLOCK,
                 BrightScriptElementTypes.CLASS_BLOCK,
                 BrightScriptElementTypes.NAMESPACE_BLOCK,
-                BrightScriptElementTypes.TRY_BLOCK -> {
-                    val range = element.textRange
-                    if (range.length > 0 && isMultiLine(element, document)) {
-                        descriptors.add(FoldingDescriptor(element.node, range))
-                    }
-                }
+                BrightScriptElementTypes.TRY_BLOCK,
                 BrightScriptElementTypes.IF_BLOCK -> {
-                    // For if blocks, only fold if multi-line
                     val range = element.textRange
                     if (range.length > 0 && isMultiLine(element, document)) {
                         descriptors.add(FoldingDescriptor(element.node, range))

@@ -10,6 +10,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
+import com.maximpietukhov.brightscript.psi.BrightScriptFunctionDefinition
 
 class BrightScriptParserDefinition : ParserDefinition {
     override fun createLexer(project: Project?): Lexer {
@@ -33,7 +34,11 @@ class BrightScriptParserDefinition : ParserDefinition {
     }
 
     override fun createElement(node: ASTNode): PsiElement {
-        return BrightScriptPsiElement(node)
+        return when (node.elementType) {
+            BrightScriptElementTypes.FUNCTION_BLOCK,
+            BrightScriptElementTypes.SUB_BLOCK -> BrightScriptFunctionDefinition(node)
+            else -> BrightScriptPsiElement(node)
+        }
     }
 
     override fun createFile(viewProvider: FileViewProvider): PsiFile {

@@ -2,6 +2,7 @@ package com.maximpietukhov.brightscript
 
 import com.intellij.psi.tree.IElementType
 import com.intellij.psi.tree.TokenSet
+import com.maximpietukhov.brightscript.psi.BrightScriptFunctionCallTokenType
 
 class BrightScriptTokenType(debugName: String) : IElementType(debugName, BrightScriptLanguage.INSTANCE) {
     override fun toString(): String = "BrightScriptTokenType." + super.toString()
@@ -21,7 +22,7 @@ object BrightScriptTokenTypes {
     @JvmField val IDENTIFIER = BrightScriptTokenType("IDENTIFIER")
     @JvmField val BUILTIN_FUNCTION = BrightScriptTokenType("BUILTIN_FUNCTION")
     @JvmField val FUNCTION_DECLARATION = BrightScriptTokenType("FUNCTION_DECLARATION")
-    @JvmField val FUNCTION_CALL = BrightScriptTokenType("FUNCTION_CALL")
+    @JvmField val FUNCTION_CALL = BrightScriptFunctionCallTokenType()
 
     // Operators
     @JvmField val OPERATOR = BrightScriptTokenType("OPERATOR")
