@@ -17,6 +17,7 @@
         <li>Go to Declaration (Ctrl+Click on function calls)</li>
         <li>Quick comment/uncomment with Ctrl+/</li>
         <li>Smart Enter - auto-insert closing tags (end function, end if, etc.)</li>
+        <li>Code completion for keywords, types, and built-in functions</li>
     </ul>
 
     <h3>About BrightScript:</h3>
@@ -29,6 +30,7 @@
     <ul>
         <li>Quick comment/uncomment with Ctrl+/ - Toggle line comments using the apostrophe (') prefix</li>
         <li>Smart Enter - Auto-insert closing tags when pressing Enter after function, sub, if, for, while, class, namespace, try</li>
+        <li>Code completion v1.0</li>
     </ul>
 
     <h3>1.2.3</h3>
@@ -95,5 +97,10 @@
         <!-- Smart Enter Handler -->
         <enterHandlerDelegate
                 implementation="com.maximpietukhov.brightscript.BrightScriptEnterHandler"/>
+
+        <!-- Code Completion -->
+        <completion.contributor
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptCompletionContributor"/>
     </extensions>
 </idea-plugin>
