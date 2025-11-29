@@ -51,6 +51,7 @@ tasks {
             <h3>1.2.4</h3>
             <ul>
                 <li>Quick comment/uncomment with Ctrl+/ - Toggle line comments using the apostrophe (') prefix</li>
+                <li>Smart Enter - Auto-insert closing tags when pressing Enter after function, sub, if, for, while, class, namespace, try</li>
             </ul>
             <h3>1.2.3</h3>
             <ul>
