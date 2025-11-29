@@ -15,6 +15,7 @@
         <li>Customizable color scheme</li>
         <li>Code folding</li>
         <li>Go to Declaration (Ctrl+Click on function calls)</li>
+        <li>Quick comment/uncomment with Ctrl+/</li>
     </ul>
 
     <h3>About BrightScript:</h3>
@@ -23,6 +24,11 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h3>1.2.4</h3>
+    <ul>
+        <li>Quick comment/uncomment with Ctrl+/ - Toggle line comments using the apostrophe (') prefix</li>
+    </ul>
+
     <h3>1.2.3</h3>
     <ul>
         <li>Function call highlighting</li>
@@ -78,5 +84,10 @@
         <lang.foldingBuilder
                 language="BrightScript"
                 implementationClass="com.maximpietukhov.brightscript.BrightScriptFoldingBuilder"/>
+
+        <!-- Commenter (Ctrl+/) -->
+        <lang.commenter
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptCommenter"/>
     </extensions>
 </idea-plugin>
