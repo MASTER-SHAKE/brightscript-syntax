@@ -18,6 +18,7 @@
         <li>Quick comment/uncomment with Ctrl+/</li>
         <li>Smart Enter - auto-insert closing tags (end function, end if, etc.)</li>
         <li>Code completion for keywords, types, and built-in functions</li>
+        <li>Code formatting (Ctrl+Alt+L) - automatic indentation for code blocks</li>
     </ul>
 
     <h3>About BrightScript:</h3>
@@ -31,6 +32,7 @@
         <li>Quick comment/uncomment with Ctrl+/ - Toggle line comments using the apostrophe (') prefix</li>
         <li>Smart Enter - Auto-insert closing tags when pressing Enter after function, sub, if, for, while, class, namespace, try</li>
         <li>Code completion v1.0</li>
+        <li>Code formatting - Automatic indentation for function, sub, if, for, while, class, namespace, try blocks</li>
     </ul>
 
     <h3>1.2.3</h3>
@@ -102,5 +104,10 @@
         <completion.contributor
                 language="BrightScript"
                 implementationClass="com.maximpietukhov.brightscript.BrightScriptCompletionContributor"/>
+
+        <!-- Code Formatting -->
+        <lang.formatter
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptFormattingModelBuilder"/>
     </extensions>
 </idea-plugin>

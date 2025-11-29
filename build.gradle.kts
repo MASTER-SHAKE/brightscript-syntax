@@ -53,6 +53,7 @@ tasks {
                 <li>Quick comment/uncomment with Ctrl+/ - Toggle line comments using the apostrophe (') prefix</li>
                 <li>Smart Enter - Auto-insert closing tags when pressing Enter after function, sub, if, for, while, class, namespace, try</li>
                 <li>Code completion - Keywords, types (after 'as'), and built-in functions with auto-parentheses</li>
+                <li>Code formatting - Automatic indentation for function, sub, if, for, while, class, namespace, try blocks</li>
             </ul>
             <h3>1.2.3</h3>
             <ul>
