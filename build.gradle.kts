@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.maximpietukhov"
-version = "1.2.4"
+version = "1.2.5"
 
 repositories {
     mavenCentral()
@@ -48,6 +48,10 @@ tasks {
         """.trimIndent())
 
         changeNotes.set("""
+            <h3>1.2.5</h3>
+            <ul>
+                <li>Fixed Smart Enter - No longer inserts duplicate closing tags when block already has matching end tag</li>
+            </ul>
             <h3>1.2.4</h3>
             <ul>
                 <li>Quick comment/uncomment with Ctrl+/ - Toggle line comments using the apostrophe (') prefix</li>

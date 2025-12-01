@@ -3,6 +3,7 @@ package com.maximpietukhov.brightscript
 import com.intellij.codeInsight.editorActions.enter.EnterHandlerDelegate
 import com.intellij.codeInsight.editorActions.enter.EnterHandlerDelegateAdapter
 import com.intellij.openapi.actionSystem.DataContext
+import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler
 import com.intellij.openapi.util.Ref
@@ -50,6 +51,11 @@ class BrightScriptEnterHandler : EnterHandlerDelegateAdapter() {
         // Check if this line already has content after the keyword that suggests it's complete
         // For example: "if x = 1 then return" should not add "end if"
         if (isSingleLineStatement(lineText, blockKeyword)) {
+            return EnterHandlerDelegate.Result.Continue
+        }
+
+        // Check if there's already a matching closing tag below
+        if (hasMatchingClosingTag(document, lineNumber, blockKeyword)) {
             return EnterHandlerDelegate.Result.Continue
         }
 
@@ -138,5 +144,68 @@ class BrightScriptEnterHandler : EnterHandlerDelegateAdapter() {
             }
             else -> closingTag
         }
+    }
+
+    private fun hasMatchingClosingTag(document: Document, startLine: Int, keyword: String): Boolean {
+        val totalLines = document.lineCount
+        var depth = 1  // We start with 1 because we found an opening keyword
+
+        // Get closing tag variants for this keyword
+        val closingVariants = getClosingVariants(keyword)
+
+        // Scan lines below the current line
+        for (lineNum in (startLine + 1) until totalLines) {
+            val lineStart = document.getLineStartOffset(lineNum)
+            val lineEnd = document.getLineEndOffset(lineNum)
+            val lineText = document.getText(com.intellij.openapi.util.TextRange(lineStart, lineEnd))
+            val trimmed = lineText.trim().lowercase()
+
+            // Skip empty lines and comments
+            if (trimmed.isEmpty() || trimmed.startsWith("'") || trimmed.startsWith("rem ")) {
+                continue
+            }
+
+            // Check for nested opening keyword (same type)
+            if (startsWithKeyword(trimmed, keyword)) {
+                // Make sure it's not a single-line statement
+                if (!isSingleLineStatement(lineText, keyword)) {
+                    depth++
+                }
+            }
+
+            // Check for closing tag
+            for (closing in closingVariants) {
+                if (trimmed == closing || trimmed.startsWith("$closing ") || trimmed.startsWith("$closing'")) {
+                    depth--
+                    if (depth == 0) {
+                        return true  // Found matching closing tag
+                    }
+                    break
+                }
+            }
+        }
+
+        return false  // No matching closing tag found
+    }
+
+    private fun getClosingVariants(keyword: String): List<String> {
+        return when (keyword) {
+            "function" -> listOf("end function", "endfunction")
+            "sub" -> listOf("end sub", "endsub")
+            "if" -> listOf("end if", "endif")
+            "for" -> listOf("end for", "endfor", "next")
+            "while" -> listOf("end while", "endwhile")
+            "class" -> listOf("end class", "endclass")
+            "namespace" -> listOf("end namespace", "endnamespace")
+            "try" -> listOf("end try", "endtry")
+            else -> listOf("end $keyword")
+        }
+    }
+
+    private fun startsWithKeyword(trimmedLine: String, keyword: String): Boolean {
+        if (!trimmedLine.startsWith(keyword)) return false
+        if (trimmedLine.length == keyword.length) return true
+        val charAfter = trimmedLine[keyword.length]
+        return !charAfter.isLetterOrDigit() && charAfter != '_'
     }
 }
