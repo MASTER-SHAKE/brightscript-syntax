@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.maximpietukhov"
-version = "1.2.5"
+version = "1.2.6"
 
 repositories {
     mavenCentral()
@@ -48,6 +48,11 @@ tasks {
         """.trimIndent())
 
         changeNotes.set("""
+            <h3>1.2.6</h3>
+            <ul>
+                <li>Improved code completion - now suggests identifiers from current file</li>
+                <li>Context-aware member completion - suggests only relevant members based on the object chain</li>
+            </ul>
             <h3>1.2.5</h3>
             <ul>
                 <li>Fixed Smart Enter - No longer inserts duplicate closing tags when block already has matching end tag</li>
