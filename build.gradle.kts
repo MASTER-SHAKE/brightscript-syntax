@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.maximpietukhov"
-version = "1.2.6"
+version = "1.2.7"
 
 repositories {
     mavenCentral()
@@ -48,6 +48,12 @@ tasks {
         """.trimIndent())
 
         changeNotes.set("""
+            <h3>1.2.7</h3>
+            <ul>
+                <li>Syntax error highlighting - underlines unclosed strings, unmatched brackets, and unknown characters</li>
+                <li>Fixed Smart Enter for nested blocks - now correctly adds closing tags for nested if/for/while inside parent blocks</li>
+                <li>Smart Enter now adds proper body indentation (4 spaces) when auto-closing blocks</li>
+            </ul>
             <h3>1.2.6</h3>
             <ul>
                 <li>Improved code completion - now suggests identifiers from current file</li>

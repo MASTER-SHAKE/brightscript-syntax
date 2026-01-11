@@ -122,12 +122,16 @@ class BrightScriptLexer : LexerBase() {
                 tokenType = BrightScriptTokenTypes.REM_COMMENT
             }
             char == '"' -> {
-                // String literal
+                // String literal - stops at closing quote OR newline (strings can't span lines in BrightScript)
                 currentOffset++
                 while (currentOffset < endOffset) {
                     val c = buffer!![currentOffset]
                     if (c == '"') {
                         currentOffset++
+                        break
+                    }
+                    if (c == '\n' || c == '\r') {
+                        // Unclosed string - stop before newline
                         break
                     }
                     currentOffset++

@@ -109,5 +109,10 @@
         <lang.formatter
                 language="BrightScript"
                 implementationClass="com.maximpietukhov.brightscript.BrightScriptFormattingModelBuilder"/>
+
+        <!-- Syntax Error Highlighting -->
+        <annotator
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptAnnotator"/>
     </extensions>
 </idea-plugin>

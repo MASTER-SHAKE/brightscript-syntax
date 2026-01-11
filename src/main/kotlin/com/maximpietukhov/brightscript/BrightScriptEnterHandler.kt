@@ -65,14 +65,17 @@ class BrightScriptEnterHandler : EnterHandlerDelegateAdapter() {
         // Calculate indentation from current line
         val indentation = lineText.takeWhile { it.isWhitespace() }
 
-        // Insert newline + indentation + newline + indentation + closing tag
-        val insertText = "\n$indentation\n$indentation$closingTag"
+        // Add extra indentation for the body (4 spaces is standard for BrightScript)
+        val bodyIndentation = indentation + "    "
+
+        // Insert newline + body indentation + newline + original indentation + closing tag
+        val insertText = "\n$bodyIndentation\n$indentation$closingTag"
 
         // We'll insert after the current line end
         document.insertString(lineEnd, insertText)
 
-        // Move caret to the middle line (where user will type)
-        val newCaretOffset = lineEnd + 1 + indentation.length
+        // Move caret to the middle line with body indentation (where user will type)
+        val newCaretOffset = lineEnd + 1 + bodyIndentation.length
         editor.caretModel.moveToOffset(newCaretOffset)
 
         return EnterHandlerDelegate.Result.Stop
@@ -153,6 +156,12 @@ class BrightScriptEnterHandler : EnterHandlerDelegateAdapter() {
         // Get closing tag variants for this keyword
         val closingVariants = getClosingVariants(keyword)
 
+        // Get the indentation of the current line to compare with closing tags
+        val currentLineStart = document.getLineStartOffset(startLine)
+        val currentLineEnd = document.getLineEndOffset(startLine)
+        val currentLineText = document.getText(com.intellij.openapi.util.TextRange(currentLineStart, currentLineEnd))
+        val currentIndent = currentLineText.takeWhile { it.isWhitespace() }.length
+
         // Scan lines below the current line
         for (lineNum in (startLine + 1) until totalLines) {
             val lineStart = document.getLineStartOffset(lineNum)
@@ -165,22 +174,41 @@ class BrightScriptEnterHandler : EnterHandlerDelegateAdapter() {
                 continue
             }
 
-            // Check for nested opening keyword (same type)
-            if (startsWithKeyword(trimmed, keyword)) {
+            // Get indentation of this line
+            val lineIndent = lineText.takeWhile { it.isWhitespace() }.length
+
+            // Check for closing tag
+            for (closing in closingVariants) {
+                if (trimmed == closing || trimmed.startsWith("$closing ") || trimmed.startsWith("$closing'")) {
+                    // If closing tag has less indentation than our block, it belongs to a parent block
+                    // Stop scanning - our block is not closed
+                    if (lineIndent < currentIndent) {
+                        return false
+                    }
+                    depth--
+                    if (depth == 0) {
+                        return true  // Found matching closing tag
+                    }
+                    break
+                }
+            }
+
+            // Check for nested opening keyword (same type) - only if same or greater indentation
+            if (lineIndent >= currentIndent && startsWithKeyword(trimmed, keyword)) {
                 // Make sure it's not a single-line statement
                 if (!isSingleLineStatement(lineText, keyword)) {
                     depth++
                 }
             }
 
-            // Check for closing tag
-            for (closing in closingVariants) {
-                if (trimmed == closing || trimmed.startsWith("$closing ") || trimmed.startsWith("$closing'")) {
-                    depth--
-                    if (depth == 0) {
-                        return true  // Found matching closing tag
+            // If we hit a closing tag for a parent block (function, sub, class, etc.) with less indentation, stop
+            if (lineIndent < currentIndent) {
+                val parentClosings = listOf("end function", "endfunction", "end sub", "endsub",
+                    "end class", "endclass", "end namespace", "endnamespace")
+                for (parentClosing in parentClosings) {
+                    if (trimmed == parentClosing || trimmed.startsWith("$parentClosing ") || trimmed.startsWith("$parentClosing'")) {
+                        return false  // Parent block ended, our block is not closed
                     }
-                    break
                 }
             }
         }
