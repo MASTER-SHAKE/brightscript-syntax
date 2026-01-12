@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.maximpietukhov"
-version = "1.2.7"
+version = "1.2.8"
 
 repositories {
     mavenCentral()
@@ -48,6 +48,13 @@ tasks {
         """.trimIndent())
 
         changeNotes.set("""
+            <h3>1.2.8</h3>
+            <ul>
+                <li>Fixed semicolon (;) incorrectly marked as error - now properly recognized for print concatenation</li>
+                <li>Fixed number type suffixes (0!, 1.5#, 10%, 100&amp;) incorrectly marked as error</li>
+                <li>Added support for exponent notation (1.5e10, 2.0d-5)</li>
+                <li>Added ? as shorthand for print keyword</li>
+            </ul>
             <h3>1.2.7</h3>
             <ul>
                 <li>Syntax error highlighting - underlines unclosed strings, unmatched brackets, and unknown characters</li>
