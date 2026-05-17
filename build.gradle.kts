@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.maximpietukhov"
-version = "1.2.8"
+version = "1.3.1"
 
 repositories {
     mavenCentral()
@@ -32,7 +32,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("232")
-        untilBuild.set("243.*")
+        untilBuild.set("261.*")
 
         // Extract the <!-- Plugin description --> section from README
         pluginDescription.set("""
@@ -48,6 +48,22 @@ tasks {
         """.trimIndent())
 
         changeNotes.set("""
+            <h3>1.3.1</h3>
+            <ul>
+                <li>Extended IDE compatibility up to 2026.1 (build 261.*)</li>
+            </ul>
+            <h3>1.3.0</h3>
+            <ul>
+                <li>Added BrighterScript (.bs) file support</li>
+                <li>Extended IDE compatibility up to 2025.1</li>
+                <li>Fixed color provider crash on IDEs without XML plugin</li>
+                <li>Added 'void' type keyword highlighting</li>
+                <li>Fixed lexer token classification for overlapping keyword/type/builtin sets</li>
+            </ul>
+            <h3>1.2.9</h3>
+            <ul>
+                <li>Color preview in gutter - hex color literals (&amp;hRRGGBB, &amp;hRRGGBBAA) now show a colored square in the editor gutter with built-in color picker</li>
+            </ul>
             <h3>1.2.8</h3>
             <ul>
                 <li>Fixed semicolon (;) incorrectly marked as error - now properly recognized for print concatenation</li>

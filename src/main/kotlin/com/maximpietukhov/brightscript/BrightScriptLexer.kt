@@ -35,8 +35,7 @@ class BrightScriptLexer : LexerBase() {
         // Type keywords
         private val TYPE_KEYWORDS = setOf(
             "boolean", "integer", "longinteger", "float", "double",
-            "string", "object", "function", "dynamic", "brsub",
-            "interface"
+            "string", "object", "dynamic", "brsub", "void"
         )
 
         // Built-in constants
@@ -49,7 +48,7 @@ class BrightScriptLexer : LexerBase() {
             // Math functions
             "abs", "atn", "cdbl", "cint", "cos", "csng", "exp", "fix", "int", "log", "rnd", "sgn", "sin", "sqr", "tan",
             // Runtime functions
-            "createobject", "type", "getglobalaa", "box", "run", "eval", "getlastruncompileerror", "getlastrunruntimeerror",
+            "createobject", "type", "getglobalaa", "box", "eval", "getlastruncompileerror", "getlastrunruntimeerror",
             // Global utility functions
             "sleep", "wait", "getinterface", "findmemberfunction", "uptime", "rebootsystem", "listdir",
             "readasciifile", "writeasciifile", "copyfile", "movefile", "matchfiles", "deletefile",
@@ -57,7 +56,7 @@ class BrightScriptLexer : LexerBase() {
             "parsejson", "formatjson", "tr",
             // Global string functions
             "ucase", "lcase", "asc", "chr", "instr", "left", "len", "mid", "right", "str", "stri",
-            "string", "stringi", "val", "substitute"
+            "stringi", "val", "substitute"
         )
 
         private val OPERATORS = setOf(
@@ -143,6 +142,24 @@ class BrightScriptLexer : LexerBase() {
                 // Number literal
                 while (currentOffset < endOffset && (buffer!![currentOffset].isDigit() || buffer!![currentOffset] == '.')) {
                     currentOffset++
+                }
+                // Check for type designator suffix (%, !, #, &, D/E for exponent)
+                if (currentOffset < endOffset) {
+                    val suffix = buffer!![currentOffset]
+                    if (suffix in setOf('%', '!', '#', '&')) {
+                        currentOffset++
+                    } else if (suffix.lowercaseChar() in setOf('d', 'e')) {
+                        // Exponent notation: 1.5e10, 1.5d10
+                        currentOffset++
+                        // Optional sign after exponent
+                        if (currentOffset < endOffset && buffer!![currentOffset] in setOf('+', '-')) {
+                            currentOffset++
+                        }
+                        // Exponent digits
+                        while (currentOffset < endOffset && buffer!![currentOffset].isDigit()) {
+                            currentOffset++
+                        }
+                    }
                 }
                 tokenEnd = currentOffset
                 tokenType = BrightScriptTokenTypes.NUMBER_LITERAL
@@ -233,6 +250,17 @@ class BrightScriptLexer : LexerBase() {
                 currentOffset++
                 tokenEnd = currentOffset
                 tokenType = BrightScriptTokenTypes.COLON
+            }
+            char == ';' -> {
+                currentOffset++
+                tokenEnd = currentOffset
+                tokenType = BrightScriptTokenTypes.SEMICOLON
+            }
+            char == '?' -> {
+                // ? is shorthand for print in BrightScript
+                currentOffset++
+                tokenEnd = currentOffset
+                tokenType = BrightScriptTokenTypes.KEYWORD
             }
             char in listOf('+', '-', '*', '/', '\\', '^', '=', '<', '>', '&') -> {
                 // Operator (including compound and increment/decrement)

@@ -43,6 +43,7 @@ object BrightScriptTokenTypes {
     @JvmField val DOT = BrightScriptTokenType("DOT")
     @JvmField val COMMA = BrightScriptTokenType("COMMA")
     @JvmField val COLON = BrightScriptTokenType("COLON")
+    @JvmField val SEMICOLON = BrightScriptTokenType("SEMICOLON")
     @JvmField val BAD_CHARACTER = BrightScriptTokenType("BAD_CHARACTER")
 
     @JvmField
