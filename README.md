@@ -1,7 +1,7 @@
 # BrightScript Syntax
 
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
-![Version](https://img.shields.io/badge/version-1.2.1-blue)
+![Version](https://img.shields.io/badge/version-1.3.1-blue)
 ![JetBrains Plugin](https://img.shields.io/badge/JetBrains-Plugin-orange)
 
 A syntax highlighting plugin for BrightScript language in JetBrains IDEs (WebStorm, IntelliJ IDEA, etc.).
