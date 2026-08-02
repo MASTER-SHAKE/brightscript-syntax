@@ -1,7 +1,6 @@
 package com.maximpietukhov.brightscript
 
 import com.intellij.codeInsight.editorActions.enter.EnterHandlerDelegate
-import com.intellij.codeInsight.editorActions.enter.EnterHandlerDelegateAdapter
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.editor.Editor
@@ -9,7 +8,11 @@ import com.intellij.openapi.editor.actionSystem.EditorActionHandler
 import com.intellij.openapi.util.Ref
 import com.intellij.psi.PsiFile
 
-class BrightScriptEnterHandler : EnterHandlerDelegateAdapter() {
+class BrightScriptEnterHandler : EnterHandlerDelegate {
+
+    override fun postProcessEnter(file: PsiFile, editor: Editor, dataContext: DataContext): EnterHandlerDelegate.Result {
+        return EnterHandlerDelegate.Result.Continue
+    }
 
     companion object {
         // Keywords that should trigger auto-completion of closing tag
@@ -45,6 +48,16 @@ class BrightScriptEnterHandler : EnterHandlerDelegateAdapter() {
         val lineEnd = document.getLineEndOffset(lineNumber)
         val lineText = document.getText(com.intellij.openapi.util.TextRange(lineStart, lineEnd))
 
+        // Continue line comment on new line
+        val commentPrefix = getCommentContinuationPrefix(lineText, offset - lineStart)
+        if (commentPrefix != null) {
+            val indentation = lineText.takeWhile { it.isWhitespace() }
+            val insertText = "\n$indentation$commentPrefix"
+            document.insertString(offset, insertText)
+            editor.caretModel.moveToOffset(offset + insertText.length)
+            return EnterHandlerDelegate.Result.Stop
+        }
+
         // Find if there's a block keyword on this line
         val blockKeyword = findBlockKeyword(lineText) ?: return EnterHandlerDelegate.Result.Continue
 
@@ -79,6 +92,46 @@ class BrightScriptEnterHandler : EnterHandlerDelegateAdapter() {
         editor.caretModel.moveToOffset(newCaretOffset)
 
         return EnterHandlerDelegate.Result.Stop
+    }
+
+    // Returns comment prefix ("' " or "REM ") if caret is inside a line comment, null otherwise
+    private fun getCommentContinuationPrefix(lineText: String, caretCol: Int): String? {
+        val commentStart = findCommentStart(lineText)
+        if (commentStart == -1) return null
+
+        val markerLength = if (lineText[commentStart] == '\'') 1 else 3
+        // Caret must be past the comment marker
+        if (caretCol < commentStart + markerLength) return null
+
+        val marker = lineText.substring(commentStart, commentStart + markerLength)
+        return "$marker "
+    }
+
+    // Finds comment start on the line, ignoring quotes inside strings
+    private fun findCommentStart(lineText: String): Int {
+        var inString = false
+        var i = 0
+        while (i < lineText.length) {
+            val c = lineText[i]
+            if (c == '"') {
+                inString = !inString
+            } else if (!inString) {
+                if (c == '\'') return i
+                if (c == 'r' || c == 'R') {
+                    val isWordStart = i == 0 || !lineText[i - 1].isLetterOrDigit() && lineText[i - 1] != '_'
+                    if (isWordStart && i + 3 <= lineText.length &&
+                        lineText.substring(i, i + 3).equals("rem", ignoreCase = true)
+                    ) {
+                        val after = lineText.getOrNull(i + 3)
+                        if (after == null || (!after.isLetterOrDigit() && after != '_')) {
+                            return i
+                        }
+                    }
+                }
+            }
+            i++
+        }
+        return -1
     }
 
     private fun findBlockKeyword(lineText: String): String? {
