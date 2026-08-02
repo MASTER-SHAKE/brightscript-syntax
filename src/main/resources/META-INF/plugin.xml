@@ -4,22 +4,27 @@
     <vendor email="master.l.shake@gmail.com" url="https://github.com/MASTER-SHAKE">Maxim Pietukhov</vendor>
 
     <description><![CDATA[
-    BrightScript syntax highlighting support for WebStorm and other JetBrains IDEs.
+    BrightScript and BrighterScript language support for WebStorm and other JetBrains IDEs.
 
     <h3>Features:</h3>
     <ul>
-        <li>Syntax highlighting for BrightScript (.brs) and BrighterScript (.bs) files</li>
-        <li>Keywords, operators, and literals recognition</li>
-        <li>Comments and string highlighting</li>
-        <li>Support for BrightScript language constructs</li>
-        <li>Customizable color scheme</li>
-        <li>Code folding</li>
-        <li>Go to Declaration (Ctrl+Click on function calls)</li>
-        <li>Quick comment/uncomment with Ctrl+/</li>
-        <li>Smart Enter - auto-insert closing tags (end function, end if, etc.)</li>
+        <li>Syntax highlighting for .brs and .bs files with a customizable color scheme</li>
         <li>Code completion for keywords, types, and built-in functions</li>
-        <li>Code formatting (Ctrl+Alt+L) - automatic indentation for code blocks</li>
-        <li>Color preview in gutter for hex color literals (&amp;hRRGGBB, &amp;hRRGGBBAA) with built-in color picker</li>
+        <li>Quick Documentation (Ctrl+Q / hover) with signatures for built-in functions</li>
+        <li>Code folding for function, sub, if, for, while, class, namespace, and try blocks</li>
+        <li>Code formatting (Ctrl+Alt+L) with automatic block indentation</li>
+        <li>Smart Enter - auto-insert closing tags (end function, end if, end for, ...)</li>
+        <li>Comment continuation - pressing Enter inside a line comment starts the next line as a comment</li>
+        <li>Quick comment / uncomment with Ctrl+/</li>
+        <li>Flavour selector in the status bar for Roku projects with a flavours/ folder - switch brand assets and manifest in one click</li>
+        <li>Syntax error highlighting for unclosed strings, unmatched brackets, and unknown characters</li>
+        <li>Go to Declaration (Ctrl+Click on function calls)</li>
+        <li>Color preview in gutter for hex color literals with built-in color picker</li>
+        <li>Matching brace highlighting for (), [], and {}</li>
+        <li>Structure View (Ctrl+F12) - list of functions and subs in the file</li>
+        <li>Find Usages (Alt+F7) for functions and subs</li>
+        <li>Live templates: func, sub, if, ife, for, fore, wh, try, pr</li>
+        <li>BrighterScript language constructs: classes, namespaces, try/catch</li>
     </ul>
 
     <h3>About BrightScript:</h3>
@@ -28,6 +33,37 @@
     ]]></description>
 
     <change-notes><![CDATA[
+    <h3>1.4.0</h3>
+    <ul>
+        <li>Structure View (Ctrl+F12 / Alt+7) - navigate functions and subs in the current file</li>
+        <li>Find Usages (Alt+F7) for functions and subs</li>
+        <li>Live templates: func, sub, if, ife, for, fore, wh, try, pr</li>
+    </ul>
+
+    <h3>1.3.5</h3>
+    <ul>
+        <li>Go to Declaration now also finds functions in BrighterScript (.bs) files</li>
+        <li>BrighterScript annotations (@inject) and template strings (`...`) are no longer marked as syntax errors</li>
+        <li>Fixed false "unclosed bracket" errors when brackets appear inside REM comments</li>
+        <li>Flavour selector now asks for confirmation before overwriting project files</li>
+    </ul>
+
+    <h3>1.3.4</h3>
+    <ul>
+        <li>Flavour selector - status bar widget for Roku projects with a flavours/ folder, applies the selected flavour (copies its images, assets, and manifest over the project root)</li>
+        <li>Comment continuation - pressing Enter inside a line comment (' or REM) automatically starts the next line with the same comment marker</li>
+    </ul>
+
+    <h3>1.3.3</h3>
+    <ul>
+        <li>Brace matcher - highlights matching parentheses (), brackets [], and braces {}</li>
+    </ul>
+
+    <h3>1.3.2</h3>
+    <ul>
+        <li>Quick Documentation (Ctrl+Q / hover) for built-in functions</li>
+    </ul>
+
     <h3>1.3.1</h3>
     <ul>
         <li>Extended IDE compatibility up to 2026.1 (build 261.*)</li>
@@ -45,39 +81,6 @@
     <h3>1.2.9</h3>
     <ul>
         <li>Color preview in gutter - hex color literals (&amp;hRRGGBB, &amp;hRRGGBBAA) now show a colored square in the editor gutter with built-in color picker</li>
-    </ul>
-
-    <h3>1.2.4</h3>
-    <ul>
-        <li>Quick comment/uncomment with Ctrl+/ - Toggle line comments using the apostrophe (') prefix</li>
-        <li>Smart Enter - Auto-insert closing tags when pressing Enter after function, sub, if, for, while, class, namespace, try</li>
-        <li>Code completion v1.0</li>
-        <li>Code formatting - Automatic indentation for function, sub, if, for, while, class, namespace, try blocks</li>
-    </ul>
-
-    <h3>1.2.3</h3>
-    <ul>
-        <li>Function call highlighting</li>
-        <li>Go to Declaration - Ctrl+Click on function calls to navigate to definition</li>
-    </ul>
-
-    <h3>1.2.2</h3>
-    <ul>
-        <li>REM comment highlighting — REM comments now highlighted in yellow</li>
-        <li>Double-apostrophe comments — '' comments also highlighted in yellow for special/doc comments</li>
-        <li>Function/class declaration highlighting — Names after function, sub, and class keywords are now highlighted distinctly</li>
-        <li>Added "REM Comment" and "Function/Class Declaration" to Color Settings page</li>
-    </ul>
-
-    <h3>1.2.1</h3>
-    <ul>
-        <li>Initial release</li>
-        <li>Basic syntax highlighting for BrightScript</li>
-        <li>Support for .brs file extension</li>
-        <li>Keyword highlighting</li>
-        <li>String and number literals support</li>
-        <li>Comment highlighting</li>
-        <li>Code folding support</li>
     </ul>
     ]]></change-notes>
 
@@ -138,5 +141,38 @@
         <!-- Color preview in gutter for &h hex color literals -->
         <colorProvider
                 implementation="com.maximpietukhov.brightscript.BrightScriptColorProvider"/>
+
+        <!-- Quick Documentation (Ctrl+Q / hover) for built-in functions -->
+        <lang.documentationProvider
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptDocumentationProvider"/>
+
+        <!-- Brace matcher for (), [], {} -->
+        <lang.braceMatcher
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptBraceMatcher"/>
+
+        <!-- Structure View (Ctrl+F12 / Alt+7) -->
+        <lang.psiStructureViewFactory
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptStructureViewFactory"/>
+
+        <!-- Find Usages (Alt+F7) for functions and subs -->
+        <lang.findUsagesProvider
+                language="BrightScript"
+                implementationClass="com.maximpietukhov.brightscript.BrightScriptFindUsagesProvider"/>
+
+        <!-- Live templates (func, sub, if, for, ...) -->
+        <liveTemplateContext
+                contextId="BRIGHTSCRIPT"
+                implementation="com.maximpietukhov.brightscript.BrightScriptTemplateContextType"/>
+        <defaultLiveTemplates file="/liveTemplates/BrightScript.xml"/>
+
+        <!-- Flavour selector in status bar (for Roku projects with a flavours/ folder) -->
+        <statusBarWidgetFactory
+                id="BrightScriptFlavourWidget"
+                implementation="com.maximpietukhov.brightscript.BrightScriptFlavourWidgetFactory"/>
+
+        <notificationGroup id="BrightScript Flavours" displayType="BALLOON"/>
     </extensions>
 </idea-plugin>

@@ -1,0 +1,72 @@
+<templateSet group="BrightScript">
+    <template name="func" value="function $NAME$($PARAMS$) as $TYPE$&#10;    $END$&#10;end function"
+              description="function block" toReformat="false" toShortenFQNames="false">
+        <variable name="NAME" expression="" defaultValue="&quot;name&quot;" alwaysStopAt="true"/>
+        <variable name="PARAMS" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="TYPE" expression="" defaultValue="&quot;void&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="BRIGHTSCRIPT" value="true"/>
+        </context>
+    </template>
+    <template name="sub" value="sub $NAME$($PARAMS$)&#10;    $END$&#10;end sub"
+              description="sub block" toReformat="false" toShortenFQNames="false">
+        <variable name="NAME" expression="" defaultValue="&quot;name&quot;" alwaysStopAt="true"/>
+        <variable name="PARAMS" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="BRIGHTSCRIPT" value="true"/>
+        </context>
+    </template>
+    <template name="if" value="if $COND$ then&#10;    $END$&#10;end if"
+              description="if block" toReformat="false" toShortenFQNames="false">
+        <variable name="COND" expression="" defaultValue="&quot;condition&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="BRIGHTSCRIPT" value="true"/>
+        </context>
+    </template>
+    <template name="ife" value="if $COND$ then&#10;    $THEN$&#10;else&#10;    $END$&#10;end if"
+              description="if-else block" toReformat="false" toShortenFQNames="false">
+        <variable name="COND" expression="" defaultValue="&quot;condition&quot;" alwaysStopAt="true"/>
+        <variable name="THEN" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="BRIGHTSCRIPT" value="true"/>
+        </context>
+    </template>
+    <template name="for" value="for $VAR$ = $FROM$ to $TO$&#10;    $END$&#10;end for"
+              description="for loop" toReformat="false" toShortenFQNames="false">
+        <variable name="VAR" expression="" defaultValue="&quot;i&quot;" alwaysStopAt="true"/>
+        <variable name="FROM" expression="" defaultValue="&quot;0&quot;" alwaysStopAt="true"/>
+        <variable name="TO" expression="" defaultValue="&quot;10&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="BRIGHTSCRIPT" value="true"/>
+        </context>
+    </template>
+    <template name="fore" value="for each $ITEM$ in $LIST$&#10;    $END$&#10;end for"
+              description="for each loop" toReformat="false" toShortenFQNames="false">
+        <variable name="ITEM" expression="" defaultValue="&quot;item&quot;" alwaysStopAt="true"/>
+        <variable name="LIST" expression="" defaultValue="&quot;list&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="BRIGHTSCRIPT" value="true"/>
+        </context>
+    </template>
+    <template name="wh" value="while $COND$&#10;    $END$&#10;end while"
+              description="while loop" toReformat="false" toShortenFQNames="false">
+        <variable name="COND" expression="" defaultValue="&quot;condition&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="BRIGHTSCRIPT" value="true"/>
+        </context>
+    </template>
+    <template name="try" value="try&#10;    $BODY$&#10;catch $ERR$&#10;    $END$&#10;end try"
+              description="try-catch block" toReformat="false" toShortenFQNames="false">
+        <variable name="BODY" expression="" defaultValue="" alwaysStopAt="true"/>
+        <variable name="ERR" expression="" defaultValue="&quot;e&quot;" alwaysStopAt="true"/>
+        <context>
+            <option name="BRIGHTSCRIPT" value="true"/>
+        </context>
+    </template>
+    <template name="pr" value="print $EXPR$" description="print statement" toReformat="false" toShortenFQNames="false">
+        <variable name="EXPR" expression="" defaultValue="" alwaysStopAt="true"/>
+        <context>
+            <option name="BRIGHTSCRIPT" value="true"/>
+        </context>
+    </template>
+</templateSet>
