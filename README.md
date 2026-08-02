@@ -1,19 +1,27 @@
 # BrightScript Syntax
 
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
-![Version](https://img.shields.io/badge/version-1.3.1-blue)
+![Version](https://img.shields.io/badge/version-1.4.0-blue)
 ![JetBrains Plugin](https://img.shields.io/badge/JetBrains-Plugin-orange)
 
-A syntax highlighting plugin for BrightScript language in JetBrains IDEs (WebStorm, IntelliJ IDEA, etc.).
+BrightScript and BrighterScript language support for JetBrains IDEs (WebStorm, IntelliJ IDEA, etc.).
 
 ## Features
 
-- **Syntax Highlighting**: Full syntax highlighting support for BrightScript (.brs) files
-- **Keyword Recognition**: Highlights all BrightScript keywords including conditionals, loops, and declarations
-- **Literal Support**: Proper highlighting for strings, numbers, and boolean values
-- **Comment Support**: Single-line comments (REM and ') are properly highlighted
-- **Operator Highlighting**: All BrightScript operators are recognized
-- **Customizable Colors**: Color scheme can be customized in IDE settings
+- **Syntax Highlighting**: for BrightScript (.brs) and BrighterScript (.bs) files, with customizable colors
+- **Code Completion**: keywords, types after `as`, built-in functions, identifiers and member chains
+- **Quick Documentation**: Ctrl+Q / hover shows signatures for built-in functions
+- **Code Folding**: function, sub, if, for, while, class, namespace, try blocks with informative placeholders
+- **Structure View**: Ctrl+F12 / Alt+7 lists functions and subs in the file
+- **Go to Declaration**: Ctrl+Click on a function call jumps to its definition
+- **Find Usages**: Alt+F7 on function and sub declarations
+- **Code Formatting**: Ctrl+Alt+L with automatic block indentation
+- **Smart Enter**: auto-inserts closing tags (end function, end if, ...) and continues line comments
+- **Live Templates**: `func`, `sub`, `if`, `ife`, `for`, `fore`, `wh`, `try`, `pr`
+- **Error Highlighting**: unclosed strings, unmatched brackets, unknown characters
+- **Color Preview**: gutter swatch and color picker for `&h` hex color literals
+- **Brace Matching**: highlights matching (), [], {}
+- **Roku Flavour Selector**: status bar widget for projects with a `flavours/` folder
 
 ## Supported Language Features
 
@@ -133,11 +141,12 @@ Make sure code folding is enabled in your IDE settings:
 
 ## Changelog
 
-### 1.2.1
-- Initial release
-- Basic syntax highlighting for BrightScript
-- Support for .brs file extension
-- Keyword highlighting
-- String and number literals support
-- Comment highlighting
-- Code folding support for all block types
+See the full version history in the plugin description on the
+[JetBrains Marketplace](https://plugins.jetbrains.com/) or in `plugin.xml` change notes.
+
+### 1.4.0 (latest)
+- Structure View, Find Usages, live templates
+- Automated test suite (`./gradlew test`)
+
+### 1.3.5
+- BrighterScript fixes: .bs files in Go to Declaration, annotations and template strings no longer flagged as errors
