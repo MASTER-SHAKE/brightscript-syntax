@@ -78,6 +78,7 @@ class BrightScriptAnnotator : Annotator {
         val bracketStack = mutableListOf<Int>()    // []
 
         var inString = false
+        var inTemplate = false
         var inComment = false
         var i = 0
 
@@ -85,22 +86,40 @@ class BrightScriptAnnotator : Annotator {
             val char = text[i]
 
             // Handle string literals - skip content inside strings
-            if (char == '"' && !inComment) {
+            if (char == '"' && !inComment && !inTemplate) {
                 inString = !inString
                 i++
                 continue
             }
 
+            // Handle template strings (backticks, can span lines)
+            if (char == '`' && !inComment && !inString) {
+                inTemplate = !inTemplate
+                i++
+                continue
+            }
+
             // Handle comments - skip to end of line
-            if (!inString && char == '\'') {
+            if (!inString && !inTemplate && char == '\'') {
                 inComment = true
+            }
+            // REM comment at word start
+            if (!inString && !inTemplate && !inComment && (char == 'r' || char == 'R')) {
+                val wordStart = i == 0 || (!text[i - 1].isLetterOrDigit() && text[i - 1] != '_')
+                if (wordStart && i + 3 <= text.length && text.substring(i, i + 3).equals("rem", ignoreCase = true)) {
+                    val after = text.getOrNull(i + 3)
+                    if (after == null || (!after.isLetterOrDigit() && after != '_')) {
+                        inComment = true
+                    }
+                }
             }
             if (char == '\n') {
                 inComment = false
+                inString = false
             }
 
             // Skip if inside string or comment
-            if (inString || inComment) {
+            if (inString || inTemplate || inComment) {
                 i++
                 continue
             }

@@ -88,6 +88,11 @@ class BrightScriptSyntaxHighlighter : SyntaxHighlighterBase() {
             DefaultLanguageHighlighterColors.STATIC_METHOD
         )
 
+        val ANNOTATION = TextAttributesKey.createTextAttributesKey(
+            "BRIGHTSCRIPT_ANNOTATION",
+            DefaultLanguageHighlighterColors.METADATA
+        )
+
         private val KEYWORD_KEYS = arrayOf(KEYWORD)
         private val TYPE_KEYWORD_KEYS = arrayOf(TYPE_KEYWORD)
         private val STRING_KEYS = arrayOf(STRING)
@@ -104,6 +109,7 @@ class BrightScriptSyntaxHighlighter : SyntaxHighlighterBase() {
         private val BUILTIN_FUNCTION_KEYS = arrayOf(BUILTIN_FUNCTION)
         private val FUNCTION_DECLARATION_KEYS = arrayOf(FUNCTION_DECLARATION)
         private val FUNCTION_CALL_KEYS = arrayOf(FUNCTION_CALL)
+        private val ANNOTATION_KEYS = arrayOf(ANNOTATION)
         private val EMPTY_KEYS = emptyArray<TextAttributesKey>()
     }
 
@@ -114,6 +120,7 @@ class BrightScriptSyntaxHighlighter : SyntaxHighlighterBase() {
             BrightScriptTokenTypes.KEYWORD -> KEYWORD_KEYS
             BrightScriptTokenTypes.TYPE_KEYWORD -> TYPE_KEYWORD_KEYS
             BrightScriptTokenTypes.STRING_LITERAL -> STRING_KEYS
+            BrightScriptTokenTypes.TEMPLATE_STRING -> STRING_KEYS
             BrightScriptTokenTypes.NUMBER_LITERAL -> NUMBER_KEYS
             BrightScriptTokenTypes.BOOLEAN_LITERAL -> NUMBER_KEYS
             BrightScriptTokenTypes.LINE_COMMENT -> COMMENT_KEYS
@@ -128,6 +135,7 @@ class BrightScriptSyntaxHighlighter : SyntaxHighlighterBase() {
             BrightScriptTokenTypes.BUILTIN_FUNCTION -> BUILTIN_FUNCTION_KEYS
             BrightScriptTokenTypes.FUNCTION_DECLARATION -> FUNCTION_DECLARATION_KEYS
             BrightScriptTokenTypes.FUNCTION_CALL -> FUNCTION_CALL_KEYS
+            BrightScriptTokenTypes.ANNOTATION -> ANNOTATION_KEYS
             else -> EMPTY_KEYS
         }
     }

@@ -37,10 +37,12 @@ class BrightScriptFunctionReference(
         val psiManager = PsiManager.getInstance(project)
         val scope = com.intellij.psi.search.GlobalSearchScope.projectScope(project)
 
-        com.intellij.psi.search.FilenameIndex.getAllFilesByExt(project, "brs", scope).forEach { virtualFile ->
-            val psiFile = psiManager.findFile(virtualFile)
-            if (psiFile is BrightScriptFile && psiFile != currentFile) {
-                findFunctionsInFile(psiFile, otherFileResults)
+        for (ext in listOf("brs", "bs")) {
+            com.intellij.psi.search.FilenameIndex.getAllFilesByExt(project, ext, scope).forEach { virtualFile ->
+                val psiFile = psiManager.findFile(virtualFile)
+                if (psiFile is BrightScriptFile && psiFile != currentFile) {
+                    findFunctionsInFile(psiFile, otherFileResults)
+                }
             }
         }
 

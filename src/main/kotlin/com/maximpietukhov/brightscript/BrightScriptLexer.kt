@@ -120,6 +120,29 @@ class BrightScriptLexer : LexerBase() {
                 tokenEnd = currentOffset
                 tokenType = BrightScriptTokenTypes.REM_COMMENT
             }
+            char == '`' -> {
+                // BrighterScript template string - can span multiple lines
+                currentOffset++
+                while (currentOffset < endOffset) {
+                    if (buffer!![currentOffset] == '`') {
+                        currentOffset++
+                        break
+                    }
+                    currentOffset++
+                }
+                tokenEnd = currentOffset
+                tokenType = BrightScriptTokenTypes.TEMPLATE_STRING
+            }
+            char == '@' && currentOffset + 1 < endOffset &&
+                (buffer!![currentOffset + 1].isLetter() || buffer!![currentOffset + 1] == '_') -> {
+                // BrighterScript annotation: @inject, @name("x")
+                currentOffset++
+                while (currentOffset < endOffset && (buffer!![currentOffset].isLetterOrDigit() || buffer!![currentOffset] == '_')) {
+                    currentOffset++
+                }
+                tokenEnd = currentOffset
+                tokenType = BrightScriptTokenTypes.ANNOTATION
+            }
             char == '"' -> {
                 // String literal - stops at closing quote OR newline (strings can't span lines in BrightScript)
                 currentOffset++
